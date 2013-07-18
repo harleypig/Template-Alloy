@@ -515,8 +515,8 @@ sub process {
         open(my $fh, '>', $file)
             || $self->throw($self->{'error'} = $self->exception('file', "$out couldn't be opened for writing: $!"));
         if (my $bm = $args->{'binmode'}) {
-            if (+$bm == 1) { binmode $fh }
-            else           { binmode $fh, $bm }
+            if    ($bm && $bm eq 1) { binmode $fh }
+            elsif ($bm)             { binmode $fh, $bm }
         } elsif ($self->{'ENCODING'}) {
             if (eval { require Encode } && defined &Encode::encode) {
                 $output = Encode::encode($self->{'ENCODING'}, $output);
