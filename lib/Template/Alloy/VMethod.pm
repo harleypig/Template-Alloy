@@ -385,8 +385,8 @@ sub item_method_redirect {
     }
     open (my $fh, '>', "$path/$file") || $t->throw('redirect', "Couldn't open \"$file\": $!");
     if (my $bm = (! $options) ? 0 : ref($options) ? $options->{'binmode'} : $options) {
-        if (+$bm == 1) { binmode $fh }
-        else { binmode $fh, $bm}
+        if    ($bm && $bm eq 1) { binmode $fh }
+        elsif ($bm)             { binmode $fh, $bm }
     }
     print $fh $text;
     return '';
